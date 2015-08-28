@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PasscodeViewController" customModule="SwiftPasscodeLock" customModuleProvider="target">
@@ -10,6 +10,7 @@
                 <outlet property="descriptionLabel" destination="x9h-3w-X9S" id="eBl-7d-oVD"/>
                 <outlet property="placeholdersWrapperX" destination="I8Q-VK-hF4" id="F9P-v7-rSe"/>
                 <outlet property="titleLabel" destination="f5K-Y3-z4p" id="88T-nN-rL6"/>
+                <outlet property="touchIDButton" destination="CIc-mT-cCr" id="s1F-3Y-Ucp"/>
                 <outlet property="view" destination="uF9-wy-f09" id="hRl-qj-zIk"/>
                 <outletCollection property="placeholders" destination="tjZ-00-TJ1" collectionClass="NSMutableArray" id="uKA-zz-Ycc"/>
                 <outletCollection property="placeholders" destination="Iqu-Gu-v5E" collectionClass="NSMutableArray" id="wTX-Am-CuF"/>
@@ -556,6 +557,17 @@
                         <action selector="deleteButtonTap:" destination="-1" eventType="touchUpInside" id="FuV-B4-fqi"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIc-mT-cCr">
+                    <rect key="frame" x="175" y="445" width="70" height="70"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="rdU-pC-zcp"/>
+                        <constraint firstAttribute="width" constant="70" id="tFE-2L-kvM"/>
+                    </constraints>
+                    <state key="normal" image="touchid"/>
+                    <connections>
+                        <action selector="touchIDButtonTap:" destination="-1" eventType="touchUpInside" id="UTh-Ua-dfp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -566,6 +578,7 @@
                 <constraint firstItem="kXh-GZ-8Cc" firstAttribute="top" secondItem="ic1-U6-fER" secondAttribute="bottom" constant="10" id="3sO-Yv-6DG"/>
                 <constraint firstItem="uIY-d2-AZZ" firstAttribute="centerX" secondItem="f5K-Y3-z4p" secondAttribute="centerX" constant="-0.5" id="5ul-9h-DhK"/>
                 <constraint firstItem="FHT-NW-zfD" firstAttribute="centerX" secondItem="xVD-Dl-jKk" secondAttribute="centerX" id="6q7-IP-rO5"/>
+                <constraint firstItem="kXh-GZ-8Cc" firstAttribute="centerX" secondItem="apw-j4-klO" secondAttribute="centerX" id="Bge-RR-4wy"/>
                 <constraint firstItem="kXh-GZ-8Cc" firstAttribute="centerX" secondItem="apw-j4-klO" secondAttribute="centerX" id="FX1-1h-H4A"/>
                 <constraint firstItem="ZsC-4m-Z0v" firstAttribute="top" secondItem="FHT-NW-zfD" secondAttribute="bottom" constant="10" id="Ggp-Zk-Oid"/>
                 <constraint firstItem="ZdX-AW-aCq" firstAttribute="centerX" secondItem="9w8-hP-RJZ" secondAttribute="centerX" id="HUM-uo-u7i"/>
@@ -581,9 +594,11 @@
                 <constraint firstItem="E8I-W2-UtA" firstAttribute="leading" secondItem="uIY-d2-AZZ" secondAttribute="trailing" constant="20" id="Was-er-cJ9"/>
                 <constraint firstItem="FHT-NW-zfD" firstAttribute="top" secondItem="xVD-Dl-jKk" secondAttribute="bottom" constant="10" id="fE3-0i-iPe"/>
                 <constraint firstItem="uIY-d2-AZZ" firstAttribute="top" secondItem="K6v-Su-dYc" secondAttribute="bottom" constant="30" id="ir1-IM-wuh"/>
+                <constraint firstItem="kXh-GZ-8Cc" firstAttribute="centerX" secondItem="CIc-mT-cCr" secondAttribute="centerX" id="mPD-4X-XC3"/>
                 <constraint firstItem="ic1-U6-fER" firstAttribute="centerX" secondItem="gQ4-3z-nXx" secondAttribute="centerX" id="mSB-bO-eGw"/>
                 <constraint firstItem="5u4-Ry-hUs" firstAttribute="centerX" secondItem="E8I-W2-UtA" secondAttribute="centerX" id="mU2-M2-Jga"/>
                 <constraint firstItem="xVD-Dl-jKk" firstAttribute="centerX" secondItem="uF9-wy-f09" secondAttribute="centerX" id="mg5-A0-Tm5"/>
+                <constraint firstItem="ZsC-4m-Z0v" firstAttribute="centerY" secondItem="CIc-mT-cCr" secondAttribute="centerY" id="rkf-EL-OUf"/>
                 <constraint firstItem="ic1-U6-fER" firstAttribute="top" secondItem="gQ4-3z-nXx" secondAttribute="bottom" constant="10" id="uU5-sB-mVv"/>
                 <constraint firstItem="kXh-GZ-8Cc" firstAttribute="centerX" secondItem="ic1-U6-fER" secondAttribute="centerX" id="ud3-8F-c4A"/>
                 <constraint firstItem="xVD-Dl-jKk" firstAttribute="top" secondItem="uIY-d2-AZZ" secondAttribute="bottom" constant="10" id="vea-Cj-9iG"/>
@@ -593,4 +608,7 @@
             <point key="canvasLocation" x="-150" y="239"/>
         </view>
     </objects>
+    <resources>
+        <image name="touchid" width="375" height="466"/>
+    </resources>
 </document>

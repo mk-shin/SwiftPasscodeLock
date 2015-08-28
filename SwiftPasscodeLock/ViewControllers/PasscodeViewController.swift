@@ -14,10 +14,23 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var touchIDButton: UIButton!
     @IBOutlet var placeholders: [PasscodePlaceholderView] = [PasscodePlaceholderView]()
     @IBOutlet weak var placeholdersWrapperX: NSLayoutConstraint!
     
+    // some apps might want [to allow users] to opt-out touchID functionality
+    public var isTouchIDAllowed = true {
+        didSet {
+            if touchIDButton != nil && passcodeLock.state is EnterPasscodeState && !isTouchIDAllowed {
+                touchIDButton?.hidden = true
+            }
+        }
+    }
+    
+    // when touchID button is enabled, touchID input will not automatically be asked
+    public var useTouchIDButton = false
     public var hideCancelButton = false
+    
     public var onCorrectPasscode: ( () -> Void )?
     
     private let passcodeLock: PasscodeLock
@@ -79,7 +92,11 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
         descriptionLabel.text = passcodeLock.state?.description
         cancelButton.hidden = hideCancelButton
         
-        if passcodeLock.state is EnterPasscodeState {
+        if isTouchIDAllowed && hideCancelButton && useTouchIDButton && canAuthenticateUsingTouchID() {
+            touchIDButton.hidden = !hideCancelButton
+        }
+        
+        if isTouchIDAllowed && !useTouchIDButton && passcodeLock.state is EnterPasscodeState {
             
             authenticateUsingTouchID()
         }
@@ -127,11 +144,18 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
         
     }
     
+    private func canAuthenticateUsingTouchID() -> Bool {
+        
+        return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+    }
+    
     private func authenticateUsingTouchID() {
         
         var error: NSError?
         let context = LAContext()
         let reason = NSLocalizedString("PasscodeLockTouchIDReason", tableName: "PasscodeLock", bundle: getLocalizationBundle(), comment: "")
+        
+        context.localizedFallbackTitle = NSLocalizedString("PasscodeLockTouchIDButton", tableName: "PasscodeLock", bundle: getLocalizationBundle(), comment: "")
         
         if !context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
             
@@ -165,6 +189,11 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
             
             passcodeLock.enterSign(sender.passcodeSign)
         }
+    }
+    
+    @IBAction func touchIDButtonTap(sender: AnyObject) {
+        
+        authenticateUsingTouchID()
     }
     
     @IBAction func deleteButtonTap(sender: UIButton) {
