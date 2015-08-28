@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PasscodeViewController" customModule="SwiftPasscodeLock" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="apw-j4-klO" id="GDx-hJ-P0Q"/>
+                <outlet property="deleteButton" destination="ZdX-AW-aCq" id="7dw-IL-3xi"/>
                 <outlet property="descriptionLabel" destination="x9h-3w-X9S" id="eBl-7d-oVD"/>
                 <outlet property="placeholdersWrapperX" destination="I8Q-VK-hF4" id="F9P-v7-rSe"/>
                 <outlet property="titleLabel" destination="f5K-Y3-z4p" id="88T-nN-rL6"/>

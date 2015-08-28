@@ -14,6 +14,7 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet var placeholders: [PasscodePlaceholderView] = [PasscodePlaceholderView]()
     @IBOutlet weak var placeholdersWrapperX: NSLayoutConstraint!
     
@@ -212,10 +213,18 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
     
     public func passcodeLock(passcodeLock: PasscodeLock, addedSignAtIndex index: Int) {
         
+        // show delete button
+        deleteButton.hidden = false
+        
         changePlaceholder(atIndex: index, toState: .Active)
     }
     
     public func passcodeLock(passcodeLock: PasscodeLock, removedSignAtIndex index: Int) {
+
+        // hide delete button
+        if index == 0 {
+            deleteButton.hidden = true
+        }
         
         changePlaceholder(atIndex: index, toState: .Inactive)
     }
