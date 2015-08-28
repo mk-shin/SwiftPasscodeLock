@@ -14,8 +14,8 @@ public class PasscodeLockPresenter: NSObject {
     private let passcodeViewController: UIViewController
     private let passcodeRepository: PasscodeRepository
     private let splashView: UIView
-    private var isPasscodePresented = false
-    private var isApplicationActive = false
+    public var isPasscodePresented = false
+    private var isFreshAppLaunch = true
     
     ///////////////////////////////////////////////////////
     // MARK: - Initializers
@@ -86,26 +86,63 @@ public class PasscodeLockPresenter: NSObject {
     
     func applicationDidEnterBackground() {
         
+        if passcodeRepository.hasPasscodeExpiry {
+            // if passcode is forced displayed already then do not set the expiry start time,
+            // so as it is not closed when app moves in foreground again
+            if isPasscodePresented {
+                passcodeRepository.deleteExpiryStartTime()
+            } else {
+                passcodeRepository.saveExpiryStartTime(NSDate().timeIntervalSinceReferenceDate)
+            }
+        }
+        
         addSplashView()
         presentPasscodeLock(splashViewAnimated: false)
     }
     
     func applicationDidLaunched() {
-        
-        addSplashView()
+
+        presentPasscodeLock(splashViewAnimated: false)
     }
     
     func applicationDidBecomeActive() {
         
-        if isApplicationActive {
-            
-            return
+        // we don't want two PasscodeViewController to be displayed together
+        // developer can easily handle the success handler for both
+        if let topController = findTopMostControllerInWindow(window)
+            where topController is PasscodeViewController && topController !== passcodeViewController
+        {
+            self.removeSplashView()
         }
         
-        isApplicationActive = true
+        // if passcode is presented but not expired then dismiss the view
+        if !isFreshAppLaunch && isPasscodePresented && passcodeRepository.hasPasscodeExpiry && !isPasscodeExpired() {
+            dismissPasscodeLock(animated: false)
+        }
         
-        updateSplashViewFrame()
-        presentPasscodeLock(splashViewAnimated: true)
+        if isFreshAppLaunch {
+            isFreshAppLaunch = false
+        }
+    }
+    
+    public func isPasscodeExpired() -> Bool {
+        
+        if let
+            startTime = passcodeRepository.getExpiryStartTime(),
+            duration = passcodeRepository.getExpiryTimeDuration()
+        {
+            let now = NSDate().timeIntervalSinceReferenceDate
+            
+            if now - startTime >= duration {
+                
+                return true
+            }
+            
+            return false
+        }
+        
+        // default is true (means expired), so even when this feature is disabled it does not affect the flow
+        return true
     }
     
     private func shouldPresentPasscodeLock() -> Bool {
@@ -144,10 +181,10 @@ public class PasscodeLockPresenter: NSObject {
         
         let topController = findTopMostControllerInWindow(window)
         
-        if topController === passcodeViewController {
-            
-            assertionFailure("Trying to present passcode view controller on top of the same view controller")
-            
+        // Trying to present passcode view controller on top of the same view controller
+        // no need to do that
+        if topController is PasscodeViewController {
+
             return
         }
         

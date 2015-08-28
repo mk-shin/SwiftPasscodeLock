@@ -39,10 +39,21 @@ class PasscodeLockStateStub: PasscodeLockState {
 
 class PasscodeRepositoryStub: PasscodeRepository {
     var hasPasscode = true
+    var hasPasscodeExpiry = true
     func savePasscode(passcode: [String]) -> Bool { return false }
     func updatePasscode(passcode: [String]) -> Bool { return false }
     func deletePasscode() -> Bool { return false }
     func getPasscode() -> [String] { return [String]() }
+    
+    func saveExpiryTimeDuration(duration: NSTimeInterval) -> Bool { return false }
+    func updateExpiryTimeDuration(duration: NSTimeInterval) -> Bool { return false }
+    func deleteExpiryTimeDuration() -> Bool { return false }
+    func getExpiryTimeDuration() -> NSTimeInterval? { return nil }
+    
+    func saveExpiryStartTime(time: NSTimeInterval) -> Bool { return false }
+    func updateExpiryStartTime(time: NSTimeInterval) -> Bool { return false }
+    func deleteExpiryStartTime() -> Bool { return false }
+    func getExpiryStartTime() -> NSTimeInterval? { return nil }
 }
 
 class PasscodeLockStateFactoryStub: PasscodeLockStateFactory {

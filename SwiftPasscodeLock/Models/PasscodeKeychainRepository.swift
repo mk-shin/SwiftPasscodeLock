@@ -14,8 +14,14 @@ public class PasscodeKeychainRepository: PasscodeRepository {
         return getPasscode().count > 0
     }
     
+    public var hasPasscodeExpiry: Bool {
+        return getExpiryTimeDuration() != nil ? true : false
+    }
+    
     private let keychain: KeychainService
     private let keyName = "passcode"
+    private let expiryDurationKeyName = "passcodeExpiryDuration"
+    private let expiryStartTimeKeyName = "passcodeExpiryStartTime"
     
     ///////////////////////////////////////////////////////
     // MARK: - Initializers
@@ -88,5 +94,105 @@ public class PasscodeKeychainRepository: PasscodeRepository {
         }
         
         return passcodeStack
+    }
+    
+    public func saveExpiryTimeDuration(duration: NSTimeInterval) -> Bool {
+        
+        let value = String(stringInterpolationSegment: duration)
+        let passcodeExpiryTimeDurationKey = GenericKey(keyName: expiryDurationKeyName, value: value)
+        
+        if let error = keychain.add(passcodeExpiryTimeDurationKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func updateExpiryTimeDuration(duration: NSTimeInterval) -> Bool {
+        
+        let value = String(stringInterpolationSegment: duration)
+        let passcodeExpiryTimeDurationKey = GenericKey(keyName: expiryDurationKeyName, value: value)
+        
+        if let error = keychain.update(passcodeExpiryTimeDurationKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func deleteExpiryTimeDuration() -> Bool {
+        
+        let passcodeExpiryTimeDurationKey = GenericKey(keyName: expiryDurationKeyName)
+        
+        if let error = keychain.remove(passcodeExpiryTimeDurationKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func getExpiryTimeDuration() -> NSTimeInterval? {
+        
+        let passcodeExpiryTimeDurationKey = GenericKey(keyName: expiryDurationKeyName)
+        
+        if let duration = keychain.get(passcodeExpiryTimeDurationKey).item?.value as? String {
+            
+            return NSTimeInterval((duration as NSString).doubleValue)
+        }
+        
+        return nil
+    }
+    
+    public func saveExpiryStartTime(time: NSTimeInterval) -> Bool {
+        
+        let value = String(stringInterpolationSegment: time)
+        let passcodeExpiryStartTimeKey = GenericKey(keyName: expiryStartTimeKeyName, value: value)
+        
+        if let error = keychain.add(passcodeExpiryStartTimeKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func updateExpiryStartTime(time: NSTimeInterval) -> Bool {
+        
+        let value = String(stringInterpolationSegment: time)
+        let passcodeExpiryStartTimeKey = GenericKey(keyName: expiryStartTimeKeyName, value: value)
+        
+        if let error = keychain.update(passcodeExpiryStartTimeKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func deleteExpiryStartTime() -> Bool {
+        
+        let passcodeExpiryStartTimeKey = GenericKey(keyName: expiryStartTimeKeyName)
+        
+        if let error = keychain.remove(passcodeExpiryStartTimeKey) {
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    public func getExpiryStartTime() -> NSTimeInterval? {
+        
+        let passcodeExpiryStartTimeKey = GenericKey(keyName: expiryStartTimeKeyName)
+        
+        if let time = keychain.get(passcodeExpiryStartTimeKey).item?.value as? String {
+            
+            return NSTimeInterval((time as NSString).doubleValue)
+        }
+        
+        return nil
     }
 }

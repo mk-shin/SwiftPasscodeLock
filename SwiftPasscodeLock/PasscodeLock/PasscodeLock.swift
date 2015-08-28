@@ -56,11 +56,22 @@ public protocol PasscodeLockDelegate: class {
 public protocol PasscodeRepository: class {
     
     var hasPasscode: Bool {get}
+    var hasPasscodeExpiry: Bool {get}
     
     func savePasscode(passcode: [String]) -> Bool
     func updatePasscode(passcode: [String]) -> Bool
     func deletePasscode() -> Bool
     func getPasscode() -> [String]
+    
+    func saveExpiryTimeDuration(duration: NSTimeInterval) -> Bool
+    func updateExpiryTimeDuration(duration: NSTimeInterval) -> Bool
+    func deleteExpiryTimeDuration() -> Bool
+    func getExpiryTimeDuration() -> NSTimeInterval?
+    
+    func saveExpiryStartTime(time: NSTimeInterval) -> Bool
+    func updateExpiryStartTime(time: NSTimeInterval) -> Bool
+    func deleteExpiryStartTime() -> Bool
+    func getExpiryStartTime() -> NSTimeInterval?
 }
 
 /// MARK: - PasscodeLockPresentable

@@ -62,6 +62,9 @@
 		D9FFD0CB1A28559B0043C82E /* PasscodePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FFD0C51A28559B0043C82E /* PasscodePlaceholderView.swift */; };
 		D9FFD0CD1A28559B0043C82E /* PasscodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9FFD0C61A28559B0043C82E /* PasscodeView.xib */; };
 		D9FFD0CE1A28559B0043C82E /* PasscodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9FFD0C61A28559B0043C82E /* PasscodeView.xib */; };
+		DEA956001B8F844E00A0517A /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FFD0BD1A28558B0043C82E /* PasscodeViewController.swift */; };
+		DEA956011B8F846500A0517A /* PasscodePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FFD0C51A28559B0043C82E /* PasscodePlaceholderView.swift */; };
+		DEA956021B8F846E00A0517A /* PasscodeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FFD0C41A28559B0043C82E /* PasscodeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -447,6 +450,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEA956021B8F846E00A0517A /* PasscodeButton.swift in Sources */,
+				DEA956011B8F846500A0517A /* PasscodePlaceholderView.swift in Sources */,
+				DEA956001B8F844E00A0517A /* PasscodeViewController.swift in Sources */,
 				D9FFD0B71A28556F0043C82E /* PasscodeLock.swift in Sources */,
 				D9319A791A1B3B96009D2569 /* KeychainQuery.swift in Sources */,
 				D9FFD0A81A2855600043C82E /* ChangePasscodeState.swift in Sources */,
