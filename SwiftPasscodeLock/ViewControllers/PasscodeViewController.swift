@@ -176,7 +176,14 @@ public class PasscodeViewController: UIViewController, PasscodeLockPresentable, 
         
         passcodeLock.resetSigns()
         
-        dismissViewControllerAnimated(true, completion: nil)
+        if navigationController != nil {
+            
+            navigationController?.popViewControllerAnimated(true)
+            
+        } else {
+            
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     ///////////////////////////////////////////////////////
