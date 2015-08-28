@@ -11,7 +11,7 @@ import UIKit
 public class PasscodeLockPresenter: NSObject {
     
     public weak var window: UIWindow?
-    private let passcodeViewController: UIViewController
+    public let passcodeViewController: UIViewController
     private let passcodeRepository: PasscodeRepository
     private let splashView: UIView
     public var isPasscodePresented = false
@@ -21,7 +21,7 @@ public class PasscodeLockPresenter: NSObject {
     // MARK: - Initializers
     ///////////////////////////////////////////////////////
     
-    public init(passcodeViewController: UIViewController, repository: PasscodeRepository, splashView: UIView) {
+    public init(passcodeViewController: UIViewController, repository: PasscodeRepository, splashView: UIView, onCorrectPasscode: (() -> Void)? = nil) {
         
         assert(passcodeViewController is PasscodeLockPresentable, "Passcode VC should conform to PasscodeLockPresentable")
         
@@ -35,7 +35,7 @@ public class PasscodeLockPresenter: NSObject {
             
             presented.onCorrectPasscode = {
                 
-                self.dismissPasscodeLock()
+                self.dismissPasscodeLock(completionHandler: onCorrectPasscode)
             }
         }
         
@@ -208,9 +208,9 @@ public class PasscodeLockPresenter: NSObject {
         isPasscodePresented = true
     }
     
-    private func dismissPasscodeLock() {
+    private func dismissPasscodeLock(animated: Bool = true, completionHandler: (() -> Void)? = nil) {
         
-        passcodeViewController.dismissViewControllerAnimated(true, completion: nil)
+        passcodeViewController.dismissViewControllerAnimated(animated, completion: completionHandler)
         
         self.isPasscodePresented = false
     }
