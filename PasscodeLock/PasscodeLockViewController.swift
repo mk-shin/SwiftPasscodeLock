@@ -91,7 +91,7 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if shouldTryToAuthenticateWithBiometrics {
+        if shouldTryToAuthenticateWithBiometrics && passcodeConfiguration.shouldRequestTouchIDImmediately {
         
             authenticateWithBiometrics()
         }
@@ -121,7 +121,9 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
     
     public func appWillEnterForegroundHandler(notification: NSNotification) {
         
-        authenticateWithBiometrics()
+        if passcodeConfiguration.shouldRequestTouchIDImmediately {
+            authenticateWithBiometrics()
+        }
     }
     
     public func appDidEnterBackgroundHandler(notification: NSNotification) {
@@ -153,9 +155,9 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
         passcodeLock.authenticateWithBiometrics()
     }
     
-    private func authenticateWithBiometrics() {
+    public func authenticateWithBiometrics() {
         
-        if passcodeConfiguration.shouldRequestTouchIDImmediately && passcodeLock.isTouchIDAllowed {
+        if passcodeLock.isTouchIDAllowed {
             
             passcodeLock.authenticateWithBiometrics()
         }
