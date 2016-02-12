@@ -82,10 +82,15 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        updatePasscodeView()
         deleteSignButton?.enabled = false
         
         setupEvents()
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updatePasscodeView()
     }
     
     public override func viewDidAppear(animated: Bool) {
